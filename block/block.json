@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "wp-ai-disclosure/notice",
+  "version": "0.1.0",
+  "title": "AI Disclosure",
+  "category": "widgets",
+  "icon": "info-outline",
+  "description": "Tells readers that they are interacting with an AI system (EU AI Act, art. 50).",
+  "keywords": ["ai", "disclosure", "transparency", "chatbot"],
+  "textdomain": "wp-ai-disclosure",
+  "attributes": {
+    "text": { "type": "string", "default": "" }
+  },
+  "supports": { "html": false, "align": ["wide", "full"] },
+  "editorScript": "file:./editor.js"
+}

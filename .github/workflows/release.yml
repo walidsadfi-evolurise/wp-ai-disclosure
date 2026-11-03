@@ -1,0 +1,26 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check that the tag matches the plugin version
+        run: |
+          V="v$(sed -n 's/^ \* Version: *//p' wp-ai-disclosure.php | tr -d '[:space:]')"
+          test "$V" = "${GITHUB_REF_NAME}" || { echo "tag ${GITHUB_REF_NAME} != plugin version ${V}"; exit 1; }
+      - name: Build zip
+        run: |
+          mkdir -p dist/wp-ai-disclosure
+          cp -r wp-ai-disclosure.php uninstall.php readme.txt LICENSE includes assets block languages dist/wp-ai-disclosure/
+          cd dist && zip -qr wp-ai-disclosure.zip wp-ai-disclosure
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/wp-ai-disclosure.zip
+          generate_release_notes: true

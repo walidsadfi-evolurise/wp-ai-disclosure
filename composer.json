@@ -1,0 +1,27 @@
+{
+  "name": "walidsadfi/wp-ai-disclosure",
+  "description": "EU AI Act (art. 50) transparency notice for chatbots and AI-assisted forms on WordPress.",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "authors": [{ "name": "Walid Sadfi", "email": "walid.sadfi@evolurise.com" }],
+  "require": { "php": ">=8.0" },
+  "require-dev": {
+    "phpunit/phpunit": "^10.5",
+    "brain/monkey": "^2.6",
+    "squizlabs/php_codesniffer": "^3.10",
+    "wp-coding-standards/wpcs": "^3.1",
+    "phpcompatibility/phpcompatibility-wp": "^2.1",
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0"
+  },
+  "config": {
+    "allow-plugins": { "dealerdirect/phpcodesniffer-composer-installer": true },
+    "sort-packages": true
+  },
+  "autoload-dev": { "psr-4": { "WpAiDisclosure\\Tests\\": "tests/" } },
+  "scripts": {
+    "lint": "phpcs",
+    "lint:fix": "phpcbf",
+    "test": "phpunit",
+    "check": ["@lint", "@test"]
+  }
+}
