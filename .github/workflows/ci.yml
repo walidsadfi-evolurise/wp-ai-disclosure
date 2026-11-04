@@ -41,7 +41,7 @@ jobs:
           mkdir -p dist/wp-ai-disclosure
           cp -r wp-ai-disclosure.php uninstall.php readme.txt LICENSE includes assets block languages dist/wp-ai-disclosure/
           cd dist && zip -qr wp-ai-disclosure.zip wp-ai-disclosure
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: wp-ai-disclosure
           path: dist/wp-ai-disclosure.zip
