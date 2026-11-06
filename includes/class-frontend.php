@@ -9,8 +9,14 @@ declare( strict_types=1 );
 
 namespace WpAiDisclosure;
 
+/**
+ * Front-end wiring: assets, footer detection payload, shortcode and block.
+ */
 final class Frontend {
 
+	/**
+	 * Hook assets and the footer output.
+	 */
 	public static function init(): void {
 		add_action( 'wp_enqueue_scripts', array( self::class, 'assets' ) );
 		add_action( 'wp_footer', array( self::class, 'footer' ), 99 );
@@ -51,6 +57,9 @@ final class Frontend {
 		return $sources;
 	}
 
+	/**
+	 * Enqueue the notice CSS/JS when the plugin is enabled.
+	 */
 	public static function assets(): void {
 		$o = Settings::get();
 		if ( empty( $o['enabled'] ) || is_admin() ) {
@@ -116,6 +125,9 @@ final class Frontend {
 		return Notice::render( $text, (string) $atts['position'], (string) $o['link_url'], (string) $o['link_text'], false );
 	}
 
+	/**
+	 * Register the editor block (no-op on WordPress without the block API).
+	 */
 	public static function block(): void {
 		if ( ! function_exists( 'register_block_type' ) ) {
 			return;

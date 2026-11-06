@@ -21,7 +21,7 @@
 
 Until the plugin is on wordpress.org: download the latest release zip from the [Releases](https://github.com/walidsadfi-evolurise/wp-ai-disclosure/releases) page and upload it in *Plugins → Add New → Upload*. Then go to *Settings → AI Disclosure*.
 
-Requires WordPress 6.4+ and PHP 8.0+.
+Requires WordPress 6.4+ and PHP 8.1+.
 
 ## Settings
 

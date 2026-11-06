@@ -5,7 +5,7 @@
  * Description:       Tells visitors when they are interacting with an AI system (EU AI Act, art. 50). Auto-detects chat widgets, adds a block and a shortcode, counts impressions for your audit trail.
  * Version:           0.1.0
  * Requires at least: 6.4
- * Requires PHP:      8.0
+ * Requires PHP:      8.1
  * Author:            Walid Sadfi
  * Author URI:        https://www.malt.fr/profile/walidsadfi
  * License:           GPL-2.0-or-later

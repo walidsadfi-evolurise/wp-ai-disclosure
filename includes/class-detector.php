@@ -11,6 +11,9 @@ declare( strict_types=1 );
 
 namespace WpAiDisclosure;
 
+/**
+ * Knows which AI assistant vendors exist, how to spot them in the page, and their labels.
+ */
 final class Detector {
 
 	/**
@@ -160,6 +163,8 @@ final class Detector {
 
 	/**
 	 * CSS selector for a vendor id, or empty string.
+	 *
+	 * @param string $id Vendor id as listed in VENDORS.
 	 */
 	public static function selector( string $id ): string {
 		return self::VENDORS[ $id ]['selector'] ?? '';

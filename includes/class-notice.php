@@ -9,6 +9,9 @@ declare( strict_types=1 );
 
 namespace WpAiDisclosure;
 
+/**
+ * Renders the transparency notice and holds the default texts per language.
+ */
 final class Notice {
 
 	public const POSITION_BOTTOM = 'bottom';
@@ -34,6 +37,8 @@ final class Notice {
 
 	/**
 	 * Pick the default text for a WordPress locale such as "fr_FR".
+	 *
+	 * @param string $locale WordPress locale (language_REGION).
 	 */
 	public static function default_text_for_locale( string $locale ): string {
 		$texts  = self::default_texts();

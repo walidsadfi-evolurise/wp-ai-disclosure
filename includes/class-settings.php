@@ -9,34 +9,45 @@ declare( strict_types=1 );
 
 namespace WpAiDisclosure;
 
+/**
+ * Plugin options: defaults, sanitisation and the settings page.
+ */
 final class Settings {
 
 	public const OPTION = 'wp_ai_disclosure';
 
 	/**
+	 * Option defaults used on activation and as the sanitiser's baseline.
+	 *
 	 * @return array<string, mixed>
 	 */
 	public static function defaults(): array {
 		return array(
 			'enabled'       => true,
-			'mode'          => 'auto', // auto | always | manual
-			'text'          => '',     // empty = locale default
+			'mode'          => 'auto', // One of auto, always, manual.
+			'text'          => '',     // Empty means the locale default text.
 			'position'      => Notice::POSITION_BOTTOM,
 			'link_url'      => '',
 			'link_text'     => '',
 			'dismissible'   => true,
-			'selectors'     => '',     // extra CSS selectors, one per line
+			'selectors'     => '',     // Extra CSS selectors, one per line.
 			'vendors'       => array_keys( Detector::vendors() ),
 			'log_enabled'   => true,
 		);
 	}
 
+	/**
+	 * Register the admin menu, the setting and the plugin action link.
+	 */
 	public static function init(): void {
 		add_action( 'admin_menu', array( self::class, 'menu' ) );
 		add_action( 'admin_init', array( self::class, 'register' ) );
 		add_filter( 'plugin_action_links_' . plugin_basename( WP_AI_DISCLOSURE_FILE ), array( self::class, 'action_links' ) );
 	}
 
+	/**
+	 * Create the option with defaults on first activation.
+	 */
 	public static function ensure_defaults(): void {
 		if ( false === get_option( self::OPTION, false ) ) {
 			add_option( self::OPTION, self::defaults() );
@@ -44,6 +55,8 @@ final class Settings {
 	}
 
 	/**
+	 * Stored options merged over the defaults.
+	 *
 	 * @return array<string, mixed>
 	 */
 	public static function get(): array {
@@ -63,7 +76,9 @@ final class Settings {
 	}
 
 	/**
-	 * @param string[] $links
+	 * Add a Settings link on the plugins screen.
+	 *
+	 * @param string[] $links Existing action links.
 	 * @return string[]
 	 */
 	public static function action_links( array $links ): array {
@@ -71,6 +86,9 @@ final class Settings {
 		return $links;
 	}
 
+	/**
+	 * Settings → AI Disclosure.
+	 */
 	public static function menu(): void {
 		add_options_page(
 			__( 'AI Disclosure', 'wp-ai-disclosure' ),
@@ -81,6 +99,9 @@ final class Settings {
 		);
 	}
 
+	/**
+	 * Register the single array option with its sanitiser.
+	 */
 	public static function register(): void {
 		register_setting(
 			'wp_ai_disclosure',
@@ -94,6 +115,8 @@ final class Settings {
 	}
 
 	/**
+	 * Validate and normalise submitted options.
+	 *
 	 * @param mixed $input Raw POST data.
 	 * @return array<string, mixed>
 	 */
@@ -135,6 +158,9 @@ final class Settings {
 		);
 	}
 
+	/**
+	 * Render the settings page.
+	 */
 	public static function page(): void {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;

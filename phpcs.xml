@@ -8,9 +8,11 @@
   <arg name="colors"/>
   <arg value="sp"/>
   <config name="minimum_wp_version" value="6.4"/>
-  <config name="testVersion" value="8.0-"/>
+  <config name="testVersion" value="8.1-"/>
   <rule ref="WordPress">
     <exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+    <!-- Arrow alignment is cosmetic and fights with readable option maps; everything else in WPCS applies. -->
+    <exclude name="WordPress.Arrays.MultipleStatementAlignment"/>
   </rule>
   <rule ref="PHPCompatibilityWP"/>
   <rule ref="WordPress.WP.I18n">

@@ -9,11 +9,17 @@ declare( strict_types=1 );
 
 namespace WpAiDisclosure;
 
+/**
+ * Daily counter of notice impressions, stored in one option, exported as CSV.
+ */
 final class Log {
 
 	public const OPTION   = 'wp_ai_disclosure_log';
 	public const MAX_DAYS = 400;
 
+	/**
+	 * Hook the AJAX hit endpoint and the CSV export action.
+	 */
 	public static function init(): void {
 		add_action( 'wp_ajax_wp_ai_disclosure_hit', array( self::class, 'ajax_hit' ) );
 		add_action( 'wp_ajax_nopriv_wp_ai_disclosure_hit', array( self::class, 'ajax_hit' ) );
@@ -22,10 +28,12 @@ final class Log {
 
 	/**
 	 * Increment today's counter. Returns the new value.
+	 *
+	 * @param string|null $day Day as Y-m-d; defaults to today (UTC).
 	 */
 	public static function hit( ?string $day = null ): int {
-		$day = $day ?? gmdate( 'Y-m-d' );
-		$log = self::all();
+		$day         = $day ?? gmdate( 'Y-m-d' );
+		$log         = self::all();
 		$log[ $day ] = ( $log[ $day ] ?? 0 ) + 1;
 		if ( count( $log ) > self::MAX_DAYS ) {
 			ksort( $log );
@@ -36,6 +44,8 @@ final class Log {
 	}
 
 	/**
+	 * Every stored day.
+	 *
 	 * @return array<string, int> day => count
 	 */
 	public static function all(): array {
@@ -44,6 +54,9 @@ final class Log {
 	}
 
 	/**
+	 * The last N days, oldest first, with zeros for days without hits.
+	 *
+	 * @param int $days How many days back from today.
 	 * @return array<string, int>
 	 */
 	public static function last_days( int $days ): array {
@@ -65,6 +78,9 @@ final class Log {
 		wp_send_json_success( array( 'logged' => true ), 200 );
 	}
 
+	/**
+	 * Stream the whole log as CSV (admin_post handler, admins only).
+	 */
 	public static function export(): void {
 		if ( ! current_user_can( 'manage_options' ) || ! check_admin_referer( 'wp_ai_disclosure_export' ) ) {
 			wp_die( esc_html__( 'Not allowed.', 'wp-ai-disclosure' ), '', array( 'response' => 403 ) );
