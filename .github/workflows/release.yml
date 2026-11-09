@@ -10,7 +10,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Check that the tag matches the plugin version
         run: |
           V="v$(sed -n 's/^ \* Version: *//p' wp-ai-disclosure.php | tr -d '[:space:]')"
