@@ -20,7 +20,7 @@ jobs:
           mkdir -p dist/wp-ai-disclosure
           cp -r wp-ai-disclosure.php uninstall.php readme.txt LICENSE includes assets block languages dist/wp-ai-disclosure/
           cd dist && zip -qr wp-ai-disclosure.zip wp-ai-disclosure
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           files: dist/wp-ai-disclosure.zip
           generate_release_notes: true
